@@ -55,9 +55,12 @@ $sql="select * from bbs where num>0 order by date desc limit 0, 10";
 $data=mysqli_query($mysqli, $sql);
 if(!$data)echo"값이 없습니다. $sql";
 $tr="";
+$n=0;
 while($row=mysqli_fetch_array($data)){
+  $n++;
+  $row['date']=substr($row['date'],0,10);
   $tr.="<tr>
-    <td>$row[num]</td>
+    <td>$n</td>
     <td>$row[writer]</td>
     <td>$row[subject]</td>
     <td>$row[content]</td>
