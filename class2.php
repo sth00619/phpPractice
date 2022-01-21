@@ -1,11 +1,23 @@
 <?php
+
+$mysqli = new mysqli("localhost","root","songan1002","my_db");
+
+// Check connection
+if ($mysqli -> connect_errno) {
+  echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+  exit();
+}
+
 if(isset($_POST['db'])){
   if(!$_POST['writer']){
       echo"<p>이름을 입력하세요</p>";
       exit;
   }
   else{
-  var_dump($_POST);
+    //var_dump($_POST);
+    $date=date('Y-m-d H:i:s');
+    $sql="insert into bbs (writer, subject, content, date) values ('$_POST[writer]','$_POST[subject]','$_POST[content]','$date')";
+    mysqli_query($mysqli, $sql);
   }
   //$name=$_POST['writer']};
 }
@@ -23,12 +35,10 @@ function cut($str, $len){
   return $str;
 }
 
-
+/*
 $tr="";
 for($i=0;$i<5;$i++){
   $n=$i+1;
-
-  $names[$i]=cut($names[$i], 9);
 
   $tr=$tr."<tr>
         <td class='td1'>$n</td>
@@ -37,6 +47,27 @@ for($i=0;$i<5;$i++){
       </tr>
   ";
 }
+*/
+
+
+
+$sql="select * from bbs where num>0 order by date desc limit 0, 10";
+$data=mysqli_query($mysqli, $sql);
+if(!$data)echo"값이 없습니다. $sql";
+$tr="";
+while($row=mysqli_fetch_array($data)){
+  $tr.="<tr>
+    <td>$row[num]</td>
+    <td>$row[writer]</td>
+    <td>$row[subject]</td>
+    <td>$row[content]</td>
+    <td>$row[date]</td>
+    </tr>";
+}
+
+
+
+
 echo"
 <style>
 .td1{
@@ -67,16 +98,14 @@ echo"
   document.form1.writer.focus();
 </script>
 
-<!--
+
 <table style='width:500px:height:300px;'>
   <tr>
       <td>순번</td>
-      <td>제목</td>
       <td>글쓴이</td>
+      <td>제목</td>
       </tr>
       $tr
       </table>
--->
-";
 
-?>
+";
