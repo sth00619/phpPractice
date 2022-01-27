@@ -8,18 +8,24 @@ if ($mysqli -> connect_errno) {
   exit();
 }
 $db=1;
+
+if(isset($_GET['dnum'])){
+  $sql='delete from bbs where num=$_GET[dnum]';
+  $re=mysqli_query($mysqli, $sql);
+}
+
 if(isset($_POST['db'])){
   if(!$_POST['writer']){
       echo"<p>이름을 입력하세요</p>";
       exit;
   }
-  if(isset($_POST['db'])){
-    if(!$_POST['writer']){
-        echo"<p>이름을 입력하세요</p>";
+if(isset($_POST['db'])){
+  if(!$_POST['subject']){
+        echo"<p>제목을 입력하세요</p>";
         exit;
       }
   }
-  if(isset($_POST['num'])){//수정하기
+if(isset($_POST['num'])){//수정하기
     $sql="update bbs set writer='$_POST[writer]',
                          subject='$_POST[subject]',
                          content='$_POST[content]'
@@ -68,7 +74,8 @@ while($row=mysqli_fetch_array($data)){
     <td class='td1'>$row[subject]</td>
     <td class='td1'>$row[content]</td>
     <td class='td1'>$row[date]</td>
-    <td class='td1'><a href='./class3.php?num=$row[num]'>[수정]</a></td>
+    <td class='td1'><a href='./class3.php?num=$row[num]'>[수정]</a> <a href='./class3.php?dnum=$row[num]'>[삭제]</a></td>
+
     </tr>";
 
 }
