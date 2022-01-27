@@ -58,7 +58,11 @@ function cut($str, $len){
 
 if(isset($_GET))
 
-$sql="select * from bbs where num>0 order by date desc limit 0, 10";
+if(isset($_GET['sort'])) $sort_query="order by $_GET[sort]";
+else $sort_query="order by date desc";
+
+$sql="select * from bbs where num>0 $sort_query limit 0, 10";
+
 $data=mysqli_query($mysqli, $sql);
 // mysql_query(query, connection);
 // mysqli_query(connection, query);
@@ -90,7 +94,7 @@ $row=mysqli_fetch_assoc($result);
 //hidden으로 수정되는 과정을 통제하기
 echo"
 
-<form name=form1 method='post' formenctype=\"multipart/form-data\" action='?'>
+<!-- form name=form1 method='post' formenctype=\"multipart/form-data\" action='?'>
   <input type='hidden' name='num' value='$_GET[num]'>
   <input type='hidden' name='db' value='$db'>
 <p style='text-align:center;font-size:30px;'><공지사항></p>
@@ -109,7 +113,7 @@ echo"
   첨부 :<input type='file' name='my_file'><br><br><br>
   <input type='hidden' name='db' value='$db'>
   <input type=submit value='저장하기'>
-</form>
+</form -->
 
 
 <script>
@@ -119,13 +123,13 @@ echo"
 <style>
  .td1{
     width:150px;height:100px;border:solid 1px #ff0000;
-   }
+  }
 </style>
 <table class='all-table' style='width:500px:height:300px;'>
   <tr>
-      <td>순번</td>
-      <td>작성자</td>
-      <td>제목</td>
+      <td><a href='?sort=num'>순번</a></td>
+      <td><a href='?sort=writer'>작성자</a></td>
+      <td><a href='?sort=subject'>제목</a></td>
       <td>내용</td>
       <td>시간</td>
       <td>수정</td>
