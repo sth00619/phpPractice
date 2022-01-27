@@ -64,6 +64,8 @@ $data=mysqli_query($mysqli, $sql);
 // mysql_query(query, connection);
 // mysqli_query(connection, query);
 //$mysqli은 가장 윗 줄에 선언되어있는데, 그 db와 연결하여 bbs에서 값을 불러오는 sql을 저장
+//mysql_query 함수는 mysqli_connect를 통해 연결된 객체를 이용하여 MySQL query를 실행시키는 함수
+//mysqli_query([연결 객체],[쿼리]);
 if(!$data)echo"값이 없습니다. $sql";
 $tr="";
 //tr:table row
@@ -139,7 +141,7 @@ button 요소의 type 속성 값이 'submit'인 경우에만 사용할 수 있�
 -<table style>부분부터는 사용자가 정보를 입력하고 DB에 저장한 후, 이를 페이지 화면에 나타낼 때, 어떤 형식을 따르는지에 대한 설명임
 <tr> tag로 묶여있고 줄마다 <tr> tag로 표시되어 있는데, 테이블 안에서 어떤 항목명을 가지고 어떤 데이터가 한 줄씩 출력되는지에 대한 설명
 마지막 부분에 $tr 부분을 echo(출력)한다는 것이 핵심
-참고로 $tr은 우리가 앞서   
+참고로 $tr은 우리가 앞서
 $tr.="<tr>
     <td>$n</td>
     <td>$row[writer]</td>
@@ -148,5 +150,5 @@ $tr.="<tr>
     <td>$row[date]</td>
     </tr>" 라고 선언해두었던 부분으로
 $sql의 형식에 맞추어 유저가 입력한 데이터를 DB(mysqli)를 통해서 받고 데이터가 잘 입력되었는지를 화면에 출력해주는 부분이다.
-  
+
 */
